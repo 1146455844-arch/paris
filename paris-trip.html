@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<title>巴黎七天游</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+body { font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; margin:0; padding:0; background:#f5f5f7; color:#222;}
+header { background:#202245; color:#fff; padding:12px 16px;}
+header h1 { margin:0; font-size:20px;}
+header small { display:block; font-size:12px; opacity:0.8;}
+main { padding:10px 10px 80px;}
+.card { background:#fff; border-radius:10px; padding:12px 14px; margin-bottom:12px; box-shadow:0 2px 4px rgba(0,0,0,0.06);}
+.card h2 { margin:0 0 8px; font-size:16px;}
+.card h3 { margin:10px 0 6px; font-size:14px;}
+.timeitem { margin-left:0; padding-left:0; list-style:none;}
+.timeitem li { padding:3px 0; font-size:14px;}
+.badge { display:inline-block; padding:2px 6px; border-radius:999px; font-size:11px; background:#eee; margin-right:4px;}
+.checkbox-list { list-style:none; margin:0; padding:0;}
+.checkbox-list li { padding:2px 0; font-size:14px;}
+.checkbox-list label { display:flex; align-items:center; gap:6px;}
+.checkbox-list input[type=checkbox] { width:16px; height:16px;}
+textarea.note { width:100%; min-height:60px; border-radius:8px; border:1px solid #ccc; padding:6px 8px; font-size:13px; box-sizing:border-box;}
+.day-done { margin-top:6px; font-size:13px;}
+.section-title { font-size:18px; font-weight:600; margin:10px 0 6px;}
+a.map-link { color:#1a73e8; text-decoration:none; font-size:13px;}
+a.map-link::before { content:"📍"; margin-right:3px;}
+footer { position:fixed; bottom:0; left:0; right:0; background:#fff; border-top:1px solid #ddd; display:flex; }
+footer button { flex:1; padding:8px 4px; border:none; background:#fff; font-size:13px;}
+footer button.active { color:#202245; font-weight:600; border-bottom:2px solid #202245;}
+.section { display:none;}
+.section.active { display:block;}
+.small { font-size:12px; color:#555;}
+</style>
+</head>
+<body>
+<header>
+  <h1 id="appTitle">巴黎七天游</h1>
+  <small>可离线使用的小行程本 · 勾选完成 / 行李清单 / 备忘</small>
+</header>
+<main>
+<div id="section-itinerary" class="section active">
+  <div class="card">
+    <h2>使用说明</h2>
+    <p class="small">
+    · 每一天都有：行程时间轴 + 已买票列表 + 当天行李检查清单 + 完成打勾 + 备忘录。<br/>
+    · 所有勾选和备注只保存在你手机本地（localStorage），删除浏览器数据会一起清空。<br/>
+    · 点击地点后面的「📍Google 地图」会跳去导航；如果打不开，就复制中文名在地图里搜。<br/>
+    </p>
+  </div>
+
+  <!-- Day 1 -->
+  <div class="card">
+    <h2>Day 1 · 12/22 周一 – 抵达巴黎 + 凯旋门 + 《歌剧魅影》</h2>
+    <h3>行程时间轴</h3>
+    <ul class="timeitem">
+      <li>07:04–09:02  TGV Lyon Part-Dieu → Paris Gare de Lyon（车票已买）</li>
+      <li>09:30–11:00  办 Navigo 周卡（zone 1–5），地铁到凯旋门附近美居酒店，寄存行李</li>
+      <li>11:00–15:00 简单午餐 + 回酒店办理入住/休息</li>
+      <li>15:50       凯旋门登顶 Arc de Triomphe（电子票）</li>
+      <li>19:00       《Le Fantôme de l’Opéra / 歌剧魅影》，Théâtre Mogador（请 18:30 左右到）</li>
+    </ul>
+    <h3>已购门票 / 车票</h3>
+    <ul class="checkbox-list">
+      <li><label><input type="checkbox" data-key="day1_ticket_0"/><span>TGV 07:04 Lyon → Paris</span></label></li>
+      <li><label><input type="checkbox" data-key="day1_ticket_1"/><span>15:50 凯旋门门票</span></label></li>
+      <li><label><input type="checkbox" data-key="day1_ticket_2"/><span>19:00 《歌剧魅影》</span></label></li>
+    </ul>
+    <h3>当天行李检查清单</h3>
+    <ul class="checkbox-list">
+      <li><label><input type="checkbox" data-key="day1_pack_0"/><span>护照 + 学生卡 + 住宿确认</span></label></li>
+      <li><label><input type="checkbox" data-key="day1_pack_1"/><span>手机 + 充电宝 + 耳机</span></label></li>
+      <li><label><input type="checkbox" data-key="day1_pack_2"/><span>银行卡 & 一点现金</span></label></li>
+      <li><label><input type="checkbox" data-key="day1_pack_3"/><span>TGV 车票（App/截图）</span></label></li>
+      <li><label><input type="checkbox" data-key="day1_pack_4"/><span>凯旋门 &amp; 歌剧魅影电子票</span></label></li>
+    </ul>
+    <div class="day-done"><label><input type="checkbox" data-key="day1_done"/> 今日行程已完成</label></div>
+    <h3>备忘 / 感想</h3>
+    <textarea class="note" data-key="day1_note" placeholder="这里可以写：要问的问题、好吃的店名、踩坑点……"></textarea>
+  </div>
+
+  <!-- Day 2 -->
+  <div class="card">
+    <h2>Day 2 · 12/23 周二 – 巴黎迪士尼整日</h2>
+    <h3>行程时间轴</h3>
+    <ul class="timeitem">
+      <li>10:00 前后  从 Charles de Gaulle–Étoile 上 RER A → Marne-la-Vallée–Chessy 迪士尼站（约 1 小时）</li>
+      <li>11:00–21:00 巴黎迪士尼乐园（1园），按自己节奏玩 + 看烟花</li>
+      <li>回程：闭园后按人流坐 RER A 回市区，再地铁回酒店</li>
+    </ul>
+    <h3>已购门票 / 车票</h3>
+    <ul class="checkbox-list">
+      <li><label><input type="checkbox" data-key="day2_ticket_0"/><span>巴黎迪士尼 dated ticket（手机二维码）</span></label></li>
+    </ul>
+    <h3>当天行李检查清单</h3>
+    <ul class="checkbox-list">
+      <li><label><input type="checkbox" data-key="day2_pack_0"/><span>迪士尼门票 &amp; Navigo</span></label></li>
+      <li><label><input type="checkbox" data-key="day2_pack_1"/><span>小挎包：手机、卡、少量现金</span></label></li>
+      <li><label><input type="checkbox" data-key="day2_pack_2"/><span>水杯/小瓶水（园内也可买）</span></label></li>
+      <li><label><input type="checkbox" data-key="day2_pack_3"/><span>充电宝（排队刷手机很费电）</span></label></li>
+      <li><label><input type="checkbox" data-key="day2_pack_4"/><span>雨具或薄外套（看天气）</span></label></li>
+    </ul>
+    <div class="day-done"><label><input type="checkbox" data-key="day2_done"/> 今日行程已完成</label></div>
+    <h3>备忘 / 感想</h3>
+    <textarea class="note" data-key="day2_note" placeholder="这里可以写：哪几个项目最好玩、下次想再刷哪个……"></textarea>
+  </div>
+
+  <!-- Day 3 -->
+  <div class="card">
+    <h2>Day 3 · 12/24 周三 – 圣礼拜堂 + 古监狱 + 卢浮宫 + 埃菲尔铁塔</h2>
+    <h3>行程时间轴</h3>
+    <ul class="timeitem">
+      <li>上午       乘地铁到 Cité 站，逛西岱岛周围</li>
+      <li>11:00      圣礼拜堂 Sainte-Chapelle &amp; 古监狱 Conciergerie 联票（11:00 时段）</li>
+      <li>午饭       Île de la Cité / 左岸随便找一家</li>
+      <li>14:00      卢浮宫 Musée du Louvre（14:00 time-slot，金字塔入口）</li>
+      <li>19:30      埃菲尔铁塔 Eiffel Tower 顶层票（19:30 时段）</li>
+    </ul>
+    <h3>已购门票 / 车票</h3>
+    <ul class="checkbox-list">
+      <li><label><input type="checkbox" data-key="day3_ticket_0"/><span>11:00 圣礼拜堂 &amp; 古监狱联票</span></label></li>
+      <li><label><input type="checkbox" data-key="day3_ticket_1"/><span>14:00 卢浮宫门票</span></label></li>
+      <li><label><input type="checkbox" data-key="day3_ticket_2"/><span>19:30 埃菲尔铁塔登顶</span></label></li>
+    </ul>
+    <h3>当天行李检查清单</h3>
+    <ul class="checkbox-list">
+      <li><label><input type="checkbox" data-key="day3_pack_0"/><span>三张电子票：圣礼拜堂联票 / 卢浮宫 / 铁塔</span></label></li>
+      <li><label><input type="checkbox" data-key="day3_pack_1"/><span>护照（以防查证件）</span></label></li>
+      <li><label><input type="checkbox" data-key="day3_pack_2"/><span>保暖外套（晚上铁塔很冷）</span></label></li>
+      <li><label><input type="checkbox" data-key="day3_pack_3"/><span>充电宝 + 数据线</span></label></li>
+      <li><label><input type="checkbox" data-key="day3_pack_4"/><span>小折叠伞/一次性雨披（视天气）</span></label></li>
+    </ul>
+    <div class="day-done"><label><input type="checkbox" data-key="day3_done"/> 今日行程已完成</label></div>
+    <h3>备忘 / 感想</h3>
+    <textarea class="note" data-key="day3_note"></textarea>
+  </div>
+
+  <!-- Day 4 -->
+  <div class="card">
+    <h2>Day 4 · 12/25 周四 – 圣诞节：拉丁区 + 卢森堡公园 + 塞纳河游船</h2>
+    <h3>行程时间轴</h3>
+    <ul class="timeitem">
+      <li>晚起       酒店早餐慢吃，11:00 左右出门</li>
+      <li>中午前后   Saint-Michel–Notre-Dame 一带，拉丁区街道随便逛 + 咖啡</li>
+      <li>下午       卢森堡公园 Jardin du Luxembourg 散步（视天气）</li>
+      <li>傍晚       地铁到 Bir-Hakeim / Trocadéro 一带拍铁塔夜景</li>
+      <li>晚间       Bateaux Parisiens 从埃菲尔铁塔脚下 Port de la Bourdonnais 出发的 1 小时游船（12/25 任意一班，最晚 21:00 左右）</li>
+    </ul>
+    <h3>已购门票 / 车票</h3>
+    <ul class="checkbox-list">
+      <li><label><input type="checkbox" data-key="day4_ticket_0"/><span>塞纳河游船：Seine River 1-Hour Cruise from the Eiffel Tower（12/25 当日任意时间）</span></label></li>
+    </ul>
+    <h3>当天行李检查清单</h3>
+    <ul class="checkbox-list">
+      <li><label><input type="checkbox" data-key="day4_pack_0"/><span>游船二维码（Headout App / 截图）</span></label></li>
+      <li><label><input type="checkbox" data-key="day4_pack_1"/><span>抗风保暖外套 + 围巾</span></label></li>
+      <li><label><input type="checkbox" data-key="day4_pack_2"/><span>充电宝 + 手机</span></label></li>
+      <li><label><input type="checkbox" data-key="day4_pack_3"/><span>少量现金（买热饮）</span></label></li>
+      <li><label><input type="checkbox" data-key="day4_pack_4"/><span>如要拍照：相机/自拍杆</span></label></li>
+    </ul>
+    <div class="day-done"><label><input type="checkbox" data-key="day4_done"/> 今日行程已完成</label></div>
+    <h3>备忘 / 感想</h3>
+    <textarea class="note" data-key="day4_note"></textarea>
+  </div>
+
+  <!-- Day 5 -->
+  <div class="card">
+    <h2>Day 5 · 12/26 周五 – 奥赛 + 橘园 + 玛黑 & 巴士底 + 《芝加哥》</h2>
+    <h3>行程时间轴</h3>
+    <ul class="timeitem">
+      <li>10:30      奥赛博物馆 Musée d’Orsay – John Singer Sargent: Éblouir Paris 展览（10:30 时段，Porte A）</li>
+      <li>12:30 左右  在博物馆或塞纳河边简单吃午饭</li>
+      <li>14:00      橘园美术馆 Musée de l’Orangerie（14:00 time-slot）</li>
+      <li>15:30–18:30 穿过杜乐丽花园 → 协和广场 → 步行或地铁去玛黑区 / 巴士底逛街、香水、小店</li>
+      <li>20:00      音乐剧《Chicago》，Casino de Paris（建议 19:30 前入场）</li>
+    </ul>
+    <h3>已购门票 / 车票</h3>
+    <ul class="checkbox-list">
+      <li><label><input type="checkbox" data-key="day5_ticket_0"/><span>10:30 奥赛 John Singer Sargent 展票</span></label></li>
+      <li><label><input type="checkbox" data-key="day5_ticket_1"/><span>14:00 橘园美术馆门票</span></label></li>
+      <li><label><input type="checkbox" data-key="day5_ticket_2"/><span>20:00 《芝加哥》演出票</span></label></li>
+    </ul>
+    <h3>当天行李检查清单</h3>
+    <ul class="checkbox-list">
+      <li><label><input type="checkbox" data-key="day5_pack_0"/><span>三张电子票：奥赛 / 橘园 / 《芝加哥》</span></label></li>
+      <li><label><input type="checkbox" data-key="day5_pack_1"/><span>舒适好走的鞋（这天步行很多）</span></label></li>
+      <li><label><input type="checkbox" data-key="day5_pack_2"/><span>充电宝 + 手机</span></label></li>
+      <li><label><input type="checkbox" data-key="day5_pack_3"/><span>香水试纸本/小本子（记喜欢的香）</span></label></li>
+      <li><label><input type="checkbox" data-key="day5_pack_4"/><span>晚间看剧想打扮一点的化妆品</span></label></li>
+    </ul>
+    <div class="day-done"><label><input type="checkbox" data-key="day5_done"/> 今日行程已完成</label></div>
+    <h3>备忘 / 感想</h3>
+    <textarea class="note" data-key="day5_note"></textarea>
+  </div>
+
+  <!-- Day 6 -->
+  <div class="card">
+    <h2>Day 6 · 12/27 周六 – 凡尔赛宫一日</h2>
+    <h3>行程时间轴</h3>
+    <ul class="timeitem">
+      <li>早上       从市区乘 RER C → Versailles Château – Rive Gauche 站（约 1 小时）</li>
+      <li>13:00      凡尔赛宫 Passport 套票入场时间（宫殿 + 花园）</li>
+      <li>下午       参观宫殿，视体力走花园 / 特里亚农</li>
+      <li>傍晚       RER C 回巴黎，晚上随意吃饭休息</li>
+    </ul>
+    <h3>已购门票 / 车票</h3>
+    <ul class="checkbox-list">
+      <li><label><input type="checkbox" data-key="day6_ticket_0"/><span>13:00 凡尔赛宫 Passport 套票</span></label></li>
+    </ul>
+    <h3>当天行李检查清单</h3>
+    <ul class="checkbox-list">
+      <li><label><input type="checkbox" data-key="day6_pack_0"/><span>凡尔赛宫电子票</span></label></li>
+      <li><label><input type="checkbox" data-key="day6_pack_1"/><span>护照（部分检查时可能要求）</span></label></li>
+      <li><label><input type="checkbox" data-key="day6_pack_2"/><span>水和小零食（园区内也可买，略贵）</span></label></li>
+      <li><label><input type="checkbox" data-key="day6_pack_3"/><span>舒适的鞋 + 可能用得上的雨具/帽子</span></label></li>
+      <li><label><input type="checkbox" data-key="day6_pack_4"/><span>充电宝（往返路上刷手机）</span></label></li>
+    </ul>
+    <div class="day-done"><label><input type="checkbox" data-key="day6_done"/> 今日行程已完成</label></div>
+    <h3>备忘 / 感想</h3>
+    <textarea class="note" data-key="day6_note"></textarea>
+  </div>
+
+  <!-- Day 7 -->
+  <div class="card">
+    <h2>Day 7 · 12/28 周日 – 荣军院 + Galliera 时装博物馆 + 最后扫货 + 回里昂</h2>
+    <h3>行程时间轴</h3>
+    <ul class="timeitem">
+      <li>上午       荣军院 Hôtel des Invalides &amp; 陆军博物馆 + 拿破仑墓（具体入场时间以票面为准，建议 10:00 左右到）</li>
+      <li>午饭       附近简单吃饭</li>
+      <li>下午前半   Palais Galliera – Rick Owens “Temple of Love” 展（Paris Musées 0€ 预约时段）</li>
+      <li>下午后半   香街 / 老佛爷 / Le Marais 最后闻香和买东西</li>
+      <li>19:00      TGV Paris Gare de Lyon → Lyon Part-Dieu（车票已买，建议 18:15 左右到站）</li>
+    </ul>
+    <h3>已购门票 / 车票</h3>
+    <ul class="checkbox-list">
+      <li><label><input type="checkbox" data-key="day7_ticket_0"/><span>荣军院 &amp; 陆军博物馆 &amp; 拿破仑墓联票</span></label></li>
+      <li><label><input type="checkbox" data-key="day7_ticket_1"/><span>Palais Galliera 展览预约票</span></label></li>
+      <li><label><input type="checkbox" data-key="day7_ticket_2"/><span>19:00 TGV Paris → Lyon</span></label></li>
+    </ul>
+    <h3>当天行李检查清单</h3>
+    <ul class="checkbox-list">
+      <li><label><input type="checkbox" data-key="day7_pack_0"/><span>荣军院 &amp; Galliera 电子票</span></label></li>
+      <li><label><input type="checkbox" data-key="day7_pack_1"/><span>多一个可折叠购物袋 / 背包</span></label></li>
+      <li><label><input type="checkbox" data-key="day7_pack_2"/><span>把香水/礼物尽量集中放好（防压碎）</span></label></li>
+      <li><label><input type="checkbox" data-key="day7_pack_3"/><span>TGV 回程车票</span></label></li>
+      <li><label><input type="checkbox" data-key="day7_pack_4"/><span>检查房间有没有遗落物品</span></label></li>
+    </ul>
+    <div class="day-done"><label><input type="checkbox" data-key="day7_done"/> 今日行程已完成</label></div>
+    <h3>备忘 / 感想</h3>
+    <textarea class="note" data-key="day7_note"></textarea>
+  </div>
+
+</div>
+
+<!-- 总行李清单 -->
+<div id="section-packing" class="section">
+  <div class="card">
+    <h2>总行李清单（出发前）</h2>
+    <ul class="checkbox-list">
+      <li><label><input type="checkbox" data-key="global_pack_0"/><span>护照 + 护照复印件 + 学生卡 / 居留证明</span></label></li>
+      <li><label><input type="checkbox" data-key="global_pack_1"/><span>银行卡（中行 / LCL 等）+ 现金（少量欧元）</span></label></li>
+      <li><label><input type="checkbox" data-key="global_pack_2"/><span>手机 + 充电宝 + 三合一充电线</span></label></li>
+      <li><label><input type="checkbox" data-key="global_pack_3"/><span>TGV 车票、各类电子门票的截图备份</span></label></li>
+      <li><label><input type="checkbox" data-key="global_pack_4"/><span>日常药品：肠胃药、过敏药、止痛药、创可贴</span></label></li>
+      <li><label><input type="checkbox" data-key="global_pack_5"/><span>衣物：几套换洗衣服 + 睡衣 + 内衣袜子</span></label></li>
+      <li><label><input type="checkbox" data-key="global_pack_6"/><span>靴子 1 双（搭配好衣服），再带一双好走路的鞋</span></label></li>
+      <li><label><input type="checkbox" data-key="global_pack_7"/><span>拖鞋（酒店可能不提供，带一双轻便的）</span></label></li>
+      <li><label><input type="checkbox" data-key="global_pack_8"/><span>洗漱：牙刷牙膏、洗面奶、卸妆产品、护肤品</span></label></li>
+      <li><label><input type="checkbox" data-key="global_pack_9"/><span>化妆包：底妆、遮瑕、定妆、日常彩妆+卸妆棉</span></label></li>
+      <li><label><input type="checkbox" data-key="global_pack_10"/><span>搓澡巾 / 搓条、指甲剪、小梳子</span></label></li>
+      <li><label><input type="checkbox" data-key="global_pack_11"/><span>香水（不宜带太多，注意防碎）、常戴首饰</span></label></li>
+      <li><label><input type="checkbox" data-key="global_pack_12"/><span>折叠伞 / 雨披、围巾、帽子（看天气）</span></label></li>
+      <li><label><input type="checkbox" data-key="global_pack_13"/><span>折叠购物袋 / 手提袋（最后一天装战利品）</span></label></li>
+    </ul>
+    <p class="small">可以把打钩当作「已经塞进箱子 / 背包」的标记；如果重新收拾，底下有「清空所有勾选」按钮。</p>
+    <button type="button" onclick="resetPacking()">清空所有勾选</button>
+  </div>
+  <div class="card">
+    <h2>小提示</h2>
+    <p class="small">
+    · 液体（如洗面奶、香水）记得控制在航空公司随身携带限制内，并密封好。<br/>
+    · 香水和玻璃瓶尽量放在行李箱中间，用衣服包裹好。<br/>
+    · 重要证件和银行卡不要全部放在同一个包里，分散一点更安全。<br/>
+    </p>
+  </div>
+</div>
+
+<!-- 天气 & 动线 -->
+<div id="section-tools" class="section">
+  <div class="card">
+    <h2>天气 & 地图快捷入口</h2>
+    <p class="small">这里不自带天气预报，而是帮你一键跳到常用网页 / App（更准）。</p>
+    <ul class="timeitem">
+      <li>巴黎整体天气：<a href="https://www.meteofrance.com/previsions-meteo-france/paris/75000" target="_blank">Météo-France Paris</a></li>
+      <li>迪士尼当天天气：<a href="https://www.meteofrance.com/previsions-meteo-france/chessy/77700" target="_blank">Chessy 天气预报</a></li>
+      <li>凡尔赛天气：<a href="https://www.meteofrance.com/previsions-meteo-france/versailles/78000" target="_blank">Versailles 天气预报</a></li>
+    </ul>
+    <p class="small">也可以直接用手机自带天气 App，把「巴黎」「Marne-la-Vallée」「Versailles」加成城市。</p>
+  </div>
+  <div class="card">
+    <h2>大馆 / 乐园动线小建议</h2>
+    <h3>卢浮宫 Musée du Louvre</h3>
+    <p class="small">
+    · 14:00 时段从金字塔入口进馆。建议优先看：德农馆（一楼《蒙娜丽莎》《迦纳的婚礼》）→ 苏利翼（古埃及馆）→ 黎塞留翼（法国雕塑）。<br/>
+    · 先把最想看的 3–4 件作品圈出来，沿着馆内指示走，不要强迫自己「全部看完」。<br/>
+    </p>
+    <h3>奥赛 / 橘园 Orsay &amp; Orangerie</h3>
+    <p class="small">
+    · 奥赛：先直奔顶层的印象派（莫奈、雷诺阿、德加），再看自己感兴趣的雕塑 / 写实主义。<br/>
+    · 橘园：地下一层是《睡莲》全景厅，建议先在这里慢慢坐一会，再看楼下的小展厅。<br/>
+    </p>
+    <h3>凡尔赛 Versailles</h3>
+    <p class="small">
+    · 先参观宫殿主线（国王/王后套房 → 镜厅），中途如果太挤可以略过部分房间。<br/>
+    · 花园很大，体力有限就以主轴喷泉 + 拉托娜喷泉为主，不必走太远。<br/>
+    </p>
+    <h3>迪士尼 Disneyland Paris</h3>
+    <p class="small">
+    · 已经下载官方 App，就按 App 的排队时间和地图走即可，尽量一圈顺时针或逆时针逛，不走回头路。<br/>
+    · 记得早点预约 / 抢演出、烟花的观赏位。<br/>
+    </p>
+  </div>
+</div>
+
+<!-- 设置 -->
+<div id="section-settings" class="section">
+  <div class="card">
+    <h2>自定义标题 / 图标说明</h2>
+    <p class="small">
+    · 这里可以改这个小网页在顶部显示的名字，例如「巴黎七天游」改成你喜欢的叫法。<br/>
+    · 真正手机桌面上的名字和图标，是由浏览器「添加到主屏幕」时决定的：<br/>
+    &nbsp;&nbsp;1）在手机浏览器里打开这个文件 → 菜单 → 选择「添加到主屏幕」。<br/>
+    &nbsp;&nbsp;2）系统会问你一个名称，可以改成任何名字。图标一般会用浏览器的默认图标。<br/>
+    · 如果以后把这个文件放到自己网站上，再配合网页图标（favicon），就能进一步自定义图标了。<br/>
+    </p>
+    <label class="small">App 顶部标题：
+      <input id="titleInput" type="text" style="width:100%; padding:6px 8px; margin-top:4px; box-sizing:border-box;" placeholder="巴黎七天游" />
+    </label>
+    <button type="button" onclick="saveTitle()" style="margin-top:6px;">保存标题</button>
+  </div>
+  <div class="card">
+    <h2>如何把这个文件放进手机？</h2>
+    <ol class="small">
+      <li>在电脑上新建一个文本文件，把整段代码保存为 <code>paris-trip.html</code>。</li>
+      <li>用浏览器打开测试一下（双击 / 拖到浏览器里），确认可以正常使用。</li>
+      <li>用你习惯的方式把文件传到手机：比如微信传给自己、发邮件、用网盘等。</li>
+      <li>在手机上点开附件 → 选择用浏览器打开（Safari / Chrome），以后就可以离线反复打开了。</li>
+      <li>喜欢的话，可以在浏览器菜单里点「添加到主屏幕」，它就会像一个 App 一样出现在桌面上。</li>
+    </ol>
+  </div>
+</div>
+
+</main>
+<footer>
+  <button id="tab-itinerary" class="active" onclick="switchSection('itinerary')">行程</button>
+  <button id="tab-packing" onclick="switchSection('packing')">行李</button>
+  <button id="tab-tools" onclick="switchSection('tools')">天气 / 动线</button>
+  <button id="tab-settings" onclick="switchSection('settings')">设置</button>
+</footer>
+<script>
+function switchSection(name){
+  const ids = ['itinerary','packing','tools','settings'];
+  ids.forEach(id=>{
+    document.getElementById('section-'+id).classList.toggle('active', id===name);
+    document.getElementById('tab-'+id).classList.toggle('active', id===name);
+  });
+}
+
+// localStorage: checkboxes + notes
+function restoreUI(){
+  document.querySelectorAll('input[type=checkbox][data-key]').forEach(cb=>{
+    const v = localStorage.getItem('paris7_'+cb.dataset.key);
+    if(v==='1'){ cb.checked = true; }
+    cb.addEventListener('change', ()=>{
+      localStorage.setItem('paris7_'+cb.dataset.key, cb.checked ? '1':'0');
+    });
+  });
+  document.querySelectorAll('textarea.note').forEach(area=>{
+    const key = 'paris7_'+area.dataset.key;
+    const v = localStorage.getItem(key);
+    if(v!==null){ area.value = v; }
+    area.addEventListener('input', ()=>{
+      localStorage.setItem(key, area.value);
+    });
+  });
+  const savedTitle = localStorage.getItem('paris7_title');
+  if(savedTitle){
+    document.getElementById('appTitle').textContent = savedTitle;
+    document.getElementById('titleInput').value = savedTitle;
+  }
+}
+function resetPacking(){
+  if(!confirm('清空所有「总行李清单」的勾选？')) return;
+  document.querySelectorAll('#section-packing input[type=checkbox][data-key]').forEach(cb=>{
+    cb.checked = false;
+    localStorage.removeItem('paris7_'+cb.dataset.key);
+  });
+}
+function saveTitle(){
+  const v = document.getElementById('titleInput').value.trim() || '巴黎七天游';
+  localStorage.setItem('paris7_title', v);
+  document.getElementById('appTitle').textContent = v;
+  alert('已保存标题～');
+}
+document.addEventListener('DOMContentLoaded', restoreUI);
+</script>
+</body>
+</html>
